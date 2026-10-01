@@ -4,9 +4,16 @@
 
 | | |
 | --- | --- |
-| Status | **Demo ready** — build passes, QA green |
-| Last updated | 30 September 2026 |
-| Blocking go-live | Client contact details + domain (see [CONTENT-TODO.md](CONTENT-TODO.md)) |
+| Status | **Deployed — demo live** |
+| Live demo | <https://mathilens-tech.github.io/Chenduraa/> |
+| Repository | `mathilens-tech/Chenduraa` (public — required by GitHub Pages on the free plan) |
+| Hosting | GitHub Pages, deployed by GitHub Actions on push to `main` |
+| Last updated | 1 October 2026 |
+| Blocking go-live | Client contact details + lead delivery + final domain (see [CONTENT-TODO.md](CONTENT-TODO.md)) |
+
+> The demo URL is a GitHub Pages **project site**, so it is served from the `/Chenduraa/`
+> sub-path. Moving to the client's own domain removes the sub-path: clear the
+> `VITE_BASE_PATH` repository variable, set `VITE_SITE_URL` to the domain, and redeploy.
 
 ---
 
@@ -67,6 +74,9 @@ Run against the **production build** (`npm run build`) served through
 | Scroll-reveal resolves to full opacity | Pass |
 | Internal links across built HTML | 14 targets, none broken |
 | Full suite re-run against a sub-path build (`VITE_BASE_PATH=Chenduraa`) | Pass — GitHub Pages project-site mode verified |
+| **Live site** — all 8 routes + sitemap, robots, OG image | 200 OK |
+| **Live site** — console errors across 6 pages, hydration, SPA navigation | Clean |
+| **Live site** — Google Maps embed | Loads (verified on the deployed site, not just in markup) |
 | Images with `alt`, iframes with `title` | All |
 | Exactly one `<h1>` per page | All 9 pages |
 
@@ -88,8 +98,6 @@ Run against the **production build** (`npm run build`) served through
   (JS + CSS + HTML + both fonts).
 - **Real device testing** — breakpoints verified in Chromium at the widths above, not on
   physical handsets.
-- **Live Google Maps embed** — blocked in the QA sandbox; the markup and lazy-loading are
-  in place but the rendered map has not been seen.
 - **Safari / Firefox** — only Chromium was available.
 - **Live email delivery** — no endpoint or address configured yet.
 

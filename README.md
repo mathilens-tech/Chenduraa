@@ -1,5 +1,8 @@
 # Chenduraa Energy Solar Power Pvt. Ltd. — Corporate Website
 
+**Live demo:** <https://mathilens-tech.github.io/Chenduraa/>
+Deployed from `main` by [`.github/workflows/github-pages.yml`](.github/workflows/github-pages.yml).
+
 Production website for Chenduraa Energy Solar Power Pvt. Ltd. — a five-page corporate
 site covering solar solutions, services, installations and enquiries.
 
