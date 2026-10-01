@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+  "trailingSlash": "auto",
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/images/*", "/*.{svg,png,jpg,jpeg,webp,ico,txt,xml,webmanifest,json}"]
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/index.html",
+      "statusCode": 404
+    }
+  },
+  "globalHeaders": {
+    "Cache-Control": "public, max-age=0, must-revalidate",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+  },
+  "routes": [
+    {
+      "route": "/assets/*",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/images/*",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      }
+    }
+  ],
+  "mimeTypes": {
+    ".webmanifest": "application/manifest+json",
+    ".webp": "image/webp",
+    ".svg": "image/svg+xml"
+  }
+}

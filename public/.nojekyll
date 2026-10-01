@@ -1,0 +1,2 @@
+Prevents GitHub Pages from running the output through Jekyll, which would strip
+files and directories beginning with an underscore.

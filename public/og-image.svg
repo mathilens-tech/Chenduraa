@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#071c36"/>
+      <stop offset="55%" stop-color="#0b2545"/>
+      <stop offset="100%" stop-color="#041225"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#eaad30" stop-opacity="0.5"/>
+      <stop offset="45%" stop-color="#eaad30" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#eaad30" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#1b4b84"/>
+      <stop offset="100%" stop-color="#0b2545"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <circle cx="980" cy="150" r="320" fill="url(#sun)"/>
+  <circle cx="980" cy="150" r="42" fill="#efc259" opacity="0.9"/>
+
+  <!-- Module array in perspective -->
+  <g fill="url(#panel)" stroke="#3a6ba6" stroke-width="1.4">
+    <polygon points="640,470 830,455 900,510 690,530"/>
+    <polygon points="845,454 1020,440 1100,492 910,509"/>
+    <polygon points="672,418 830,407 862,447 692,459"/>
+    <polygon points="845,406 1000,395 1040,434 878,446"/>
+    <polygon points="700,378 832,369 856,400 716,410"/>
+    <polygon points="846,368 975,359 1004,390 870,399"/>
+  </g>
+  <g stroke="#3a6ba6" stroke-width="0.9" opacity="0.6">
+    <path d="M735,462 L765,500M888,447 L905,477M962,436 L982,466"/>
+  </g>
+
+  <!-- Brand mark -->
+  <g transform="translate(96,88)">
+    <rect width="72" height="72" rx="13" fill="#0f2e52" stroke="rgba(255,255,255,0.14)"/>
+    <circle cx="36" cy="26" r="9.7" fill="#eaad30"/>
+    <path d="M15.5 54.7 21.6 40.7h28.8l6.1 14z" fill="#ffffff" fill-opacity="0.93"/>
+  </g>
+
+  <text x="192" y="124" font-family="Manrope, Segoe UI, sans-serif" font-size="34" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Chenduraa</text>
+  <text x="192" y="152" font-family="Manrope, Segoe UI, sans-serif" font-size="15" font-weight="700" fill="#efc259" letter-spacing="4">ENERGY</text>
+
+  <!-- Headline -->
+  <text x="96" y="300" font-family="Manrope, Segoe UI, sans-serif" font-size="66" font-weight="800" fill="#ffffff" letter-spacing="-2">Powering a Smarter,</text>
+  <text x="96" y="372" font-family="Manrope, Segoe UI, sans-serif" font-size="66" font-weight="800" fill="#efc259" letter-spacing="-2">Sustainable Future</text>
+
+  <rect x="96" y="410" width="64" height="3" fill="#eaad30"/>
+  <text x="96" y="462" font-family="Inter, Segoe UI, sans-serif" font-size="23" fill="#adc3e0">Solar energy solutions for homes and businesses</text>
+  <text x="96" y="498" font-family="Inter, Segoe UI, sans-serif" font-size="19" fill="#7896c4">Installation &#183; Operation &amp; Maintenance &#183; Subsidy Assistance</text>
+</svg>

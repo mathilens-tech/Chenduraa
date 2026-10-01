@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap URL is rewritten at build time from VITE_SITE_URL (scripts/prerender.mjs)
+Sitemap: https://www.chenduraaenergy.com/sitemap.xml

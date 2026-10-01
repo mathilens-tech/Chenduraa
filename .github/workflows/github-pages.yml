@@ -1,0 +1,90 @@
+name: Deploy to GitHub Pages
+
+# Alternative to the Azure Static Web Apps workflow. Enable ONE of the two:
+#   Settings -> Pages -> Build and deployment -> Source: "GitHub Actions"
+#
+# Note: publishing GitHub Pages from a PRIVATE repository requires a paid
+# GitHub plan (Pro / Team / Enterprise). On the free plan the repository must
+# be public.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish; queue at most one more.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+        env:
+          # ------------------------------------------------------------------
+          # PROJECT SITE (https://<user>.github.io/<repo>/):
+          #   set VITE_BASE_PATH to the repository name, and make
+          #   VITE_SITE_URL include it.
+          #     VITE_BASE_PATH: Chenduraa
+          #     VITE_SITE_URL:  https://<user>.github.io/Chenduraa
+          #
+          # CUSTOM DOMAIN or USER/ORG SITE (served from the root):
+          #   leave VITE_BASE_PATH unset and set VITE_SITE_URL to the domain.
+          # ------------------------------------------------------------------
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH }}
+          VITE_SITE_URL: ${{ vars.VITE_SITE_URL }}
+          VITE_CONTACT_PHONE: ${{ vars.VITE_CONTACT_PHONE }}
+          VITE_CONTACT_PHONE_E164: ${{ vars.VITE_CONTACT_PHONE_E164 }}
+          VITE_CONTACT_EMAIL: ${{ vars.VITE_CONTACT_EMAIL }}
+          VITE_WHATSAPP_E164: ${{ vars.VITE_WHATSAPP_E164 }}
+          VITE_OFFICE_CHENNAI_ENABLED: ${{ vars.VITE_OFFICE_CHENNAI_ENABLED }}
+          VITE_SOLUTION_INDUSTRIAL_ENABLED: ${{ vars.VITE_SOLUTION_INDUSTRIAL_ENABLED }}
+          VITE_SOCIAL_LINKEDIN: ${{ vars.VITE_SOCIAL_LINKEDIN }}
+          VITE_SOCIAL_FACEBOOK: ${{ vars.VITE_SOCIAL_FACEBOOK }}
+          VITE_SOCIAL_INSTAGRAM: ${{ vars.VITE_SOCIAL_INSTAGRAM }}
+          VITE_SOCIAL_YOUTUBE: ${{ vars.VITE_SOCIAL_YOUTUBE }}
+          VITE_LEAD_ENDPOINT: ${{ vars.VITE_LEAD_ENDPOINT }}
+          VITE_LEAD_ACCESS_KEY: ${{ vars.VITE_LEAD_ACCESS_KEY }}
+          VITE_GOOGLE_MAPS_EMBED_KEY: ${{ vars.VITE_GOOGLE_MAPS_EMBED_KEY }}
+
+      - name: Add CNAME for the custom domain
+        # Only when a custom domain is configured as a repository variable.
+        if: vars.CUSTOM_DOMAIN != ''
+        run: echo "${{ vars.CUSTOM_DOMAIN }}" > dist/CNAME
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
