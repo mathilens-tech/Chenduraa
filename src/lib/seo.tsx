@@ -23,9 +23,17 @@ export function fullTitle(title: string): string {
     : `${title} | ${company.legalName}`
 }
 
+/**
+ * Canonical URLs carry a trailing slash.
+ *
+ * The build emits directory-index HTML (`about/index.html`), and static hosts
+ * serve that at `/about/` — GitHub Pages 301-redirects `/about` to it. Pointing
+ * the canonical at the slashless form would aim every canonical tag at a
+ * redirect, so it is normalised here to the URL actually served.
+ */
 export function canonicalUrl(path: string): string {
-  const clean = path === '/' ? '/' : `/${path.replace(/^\/+|\/+$/g, '')}`
-  return `${company.siteUrl}${clean}`
+  const slug = path.replace(/^\/+|\/+$/g, '')
+  return slug ? `${company.siteUrl}/${slug}/` : `${company.siteUrl}/`
 }
 
 /* ----------------------------- SSR collection ----------------------------- */

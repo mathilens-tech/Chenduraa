@@ -113,7 +113,9 @@ const sitemapXml = [
   ...routes.map((route) =>
     [
       '  <url>',
-      `    <loc>${siteUrl}${route === '/' ? '/' : route}</loc>`,
+      // Trailing slash matches what static hosts actually serve for a
+      // directory-index build, and matches the canonical tag on the page.
+      `    <loc>${siteUrl}${route === '/' ? '/' : `${route}/`}</loc>`,
       `    <lastmod>${today}</lastmod>`,
       `    <changefreq>monthly</changefreq>`,
       `    <priority>${priorityFor(route)}</priority>`,
