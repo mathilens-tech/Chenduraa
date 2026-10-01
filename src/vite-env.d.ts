@@ -13,6 +13,7 @@ interface ImportMetaEnv {
   readonly VITE_SOCIAL_YOUTUBE?: string
   readonly VITE_LEAD_ENDPOINT?: string
   readonly VITE_LEAD_ACCESS_KEY?: string
+  readonly VITE_LEAD_FORMAT?: 'form' | 'json'
   readonly VITE_BASE_PATH?: string
   readonly VITE_SOLUTION_INDUSTRIAL_ENABLED?: string
   readonly VITE_GOOGLE_MAPS_EMBED_KEY?: string

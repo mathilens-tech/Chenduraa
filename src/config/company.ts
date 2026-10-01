@@ -121,6 +121,18 @@ export const leadEndpoint = value(env.VITE_LEAD_ENDPOINT)
 export const leadAccessKey = value(env.VITE_LEAD_ACCESS_KEY)
 
 /**
+ * How the enquiry is encoded on the wire. Field names are identical either way.
+ *
+ * 'form' (default) — multipart/form-data. This is a CORS-"simple" request, so
+ *   the browser sends no preflight. Hosted form services (Web3Forms, Formspree,
+ *   Getform, FormSubmit) need this: several, Web3Forms included, do not answer
+ *   the OPTIONS preflight that a JSON content-type would trigger.
+ * 'json' — application/json. Use for your own Lead API, where you control CORS.
+ */
+export const leadFormat: 'form' | 'json' =
+  value(env.VITE_LEAD_FORMAT) === 'json' ? 'json' : 'form'
+
+/**
  * Sub-path the site is served from, with leading and trailing slashes
  * ("/" when served from the domain root). Vite injects this from
  * VITE_BASE_PATH at build time.

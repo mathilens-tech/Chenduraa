@@ -1,7 +1,7 @@
 import { useId, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Icon } from '@/components/graphics/Icon'
-import { contact, leadAccessKey, leadEndpoint } from '@/config/company'
+import { contact, leadAccessKey, leadEndpoint, leadFormat } from '@/config/company'
 import { solutions } from '@/content/solutions'
 import { cn } from '@/lib/cn'
 
@@ -57,6 +57,15 @@ function isValidPhone(raw: string): boolean {
 
 function isValidEmail(raw: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(raw.trim())
+}
+
+/** Empty and null values are omitted rather than sent as the string "null". */
+function toFormData(fields: Record<string, string | null>): FormData {
+  const data = new FormData()
+  for (const [key, value] of Object.entries(fields)) {
+    if (value !== null && value !== '') data.append(key, value)
+  }
+  return data
 }
 
 function validate(fields: Fields): Errors {
@@ -137,21 +146,25 @@ export function EnquiryForm() {
 
     try {
       if (leadEndpoint) {
+        const fields: Record<string, string | null> = {
+          ...payload,
+          // Web3Forms (and similar) authenticate the form with a public key
+          // in the body. Omitted entirely when not configured.
+          ...(leadAccessKey ? { access_key: leadAccessKey } : {}),
+          subject: `Website enquiry — ${payload.requirement}`,
+        }
+
+        // `Accept` is a CORS-safelisted header, so on its own it never triggers
+        // a preflight — unlike a JSON content-type. See `leadFormat`.
         const response = await fetch(leadEndpoint, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // Form services return JSON instead of an HTML redirect when asked.
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            ...payload,
-            // Web3Forms (and similar) authenticate the form with a public key
-            // in the body. Omitted entirely when not configured.
-            ...(leadAccessKey ? { access_key: leadAccessKey } : {}),
-            subject: `Website enquiry — ${payload.requirement}`,
-          }),
+          headers:
+            leadFormat === 'json'
+              ? { 'Content-Type': 'application/json', Accept: 'application/json' }
+              : { Accept: 'application/json' },
+          body: leadFormat === 'json' ? JSON.stringify(fields) : toFormData(fields),
         })
+
         if (!response.ok) throw new Error(`Lead endpoint responded ${response.status}`)
       } else if (contact.email) {
         // No endpoint configured: hand off to the visitor's mail client.
